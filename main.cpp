@@ -100,6 +100,7 @@ int main()
 
 	GravitySource source(800, 500, 7000, sf::Color::Yellow);
 	Particle particle(600, 700, 4, 1, sf::Color::Cyan);
+	//Particle particle(450, 650, 4, 1, sf::Color::Cyan);
 
 	while(window.isOpen())
 	{
