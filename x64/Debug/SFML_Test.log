@@ -1,6 +1,8 @@
 ﻿  main.cpp
-E:\V_Studio prog\SFML_Test\main.cpp(82,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  rough.cpp
-E:\V_Studio prog\SFML_Test\rough.cpp(148,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
+E:\V_Studio prog\SFML_Test\main.cpp(94,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+E:\V_Studio prog\SFML_Test\main.cpp(120,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+E:\V_Studio prog\SFML_Test\main.cpp(121,15): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\V_Studio prog\SFML_Test\main.cpp(125,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+E:\V_Studio prog\SFML_Test\main.cpp(126,11): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\V_Studio prog\SFML_Test\main.cpp(148,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   SFML_Test.vcxproj -> E:\V_Studio prog\SFML_Test\x64\Debug\SFML_Test.exe

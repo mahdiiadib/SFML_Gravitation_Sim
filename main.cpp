@@ -40,12 +40,16 @@ public:
 };
 
 
+int descnt=0;
+
 class Particle
 {
 	sf::Vector2f pos, vel;
 	sf::CircleShape s;
 
 public:
+	bool destroyed=false;
+
 	Particle(float posx, float posy, float velx, float vely, sf::Color color=sf::Color::White)
 	{
 		pos=sf::Vector2f(posx, posy);
@@ -53,14 +57,17 @@ public:
 
 		s.setPosition(pos);
 		s.setFillColor(sf::Color::White);
-		s.setRadius(8);
+		s.setRadius(2.5);
 		s.setFillColor(color);
 	}
 
 	void render(sf::RenderWindow& windo)
 	{
-		s.setPosition(pos);
-		windo.draw(s);
+		//if(!destroyed)
+		{
+			s.setPosition(pos);
+			windo.draw(s);
+		}
 	}
 
 	sf::Vector2f get_pos()
@@ -71,6 +78,11 @@ public:
 	sf::Vector2f get_vel()
 	{
 		return vel;
+	}
+
+	void set_color(sf::Color col)
+	{
+		s.setFillColor(col);
 	}
 
 	void update_physics(GravitySource& s)
@@ -89,18 +101,56 @@ public:
 
 		vel+={acceleration_x, acceleration_y};
 		pos+=vel;
+
+		if(pos.x<=510 && pos.x>=490 && pos.y<=510 && pos.y>=490) destroyed=true, set_color(sf::Color::Yellow), std::cout<<++descnt<<'\n';
+		if(pos.x<=1210 && pos.x>=1190 && pos.y<=510 && pos.y>=490) destroyed=true, set_color(sf::Color::Cyan), std::cout<<++descnt<<'\n';
 	}
 };
+
+
+sf::Color map_val_to_color(float value) //value is 0-1
+{
+	if(value<0) value=0;
+	if(value>1) value=1;
+
+	int r=0, g=0, b=0;
+
+	if(value < 0.5f)
+	{
+		b = 255 * (1.0 - 2 * value);
+		g = 255 * 2 * value;
+	}
+	else
+	{
+		g = 255 * (2.0 - 2 * value);
+		r = 255 * (2 * value - 1);
+	}
+
+	return sf::Color(r, g, b);
+}
 
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1600, 1000), "Orbital Gravity Simulation");
-	window.setFramerateLimit(75);
+	window.setFramerateLimit(120);
 
-	GravitySource source(800, 500, 7000, sf::Color::Yellow);
-	Particle particle(600, 700, 4, 1, sf::Color::Cyan);
-	//Particle particle(450, 650, 4, 1, sf::Color::Cyan);
+	std::vector<GravitySource> sources;
+	sources.push_back(GravitySource(500, 500, 7000, sf::Color::Yellow));
+	sources.push_back(GravitySource(1200, 500, 7000, sf::Color::Cyan));
+
+	int num_particles=2000;
+
+	std::vector<Particle> particles;
+
+	for(int i=0; i<num_particles; i++)
+	{
+		particles.push_back(Particle(600, 700, 4, 0.2+(0.1/num_particles)*i));
+
+		//change colors
+		float val=(float)i/(float)num_particles;
+		particles[i].set_color(map_val_to_color(val));
+	}
 
 	while(window.isOpen())
 	{
@@ -112,10 +162,15 @@ int main()
 		}
 
 		window.clear();
-		particle.update_physics(source);
-		//draw calls
-		source.render(window);
-		particle.render(window);
+		
+		for(GravitySource& src : sources)
+		{
+			for(Particle& p : particles) if(!p.destroyed) p.update_physics(src);
+		}
+
+		for(GravitySource& src : sources) src.render(window);
+		for(Particle& p : particles) p.render(window);
+
 		window.display();
 	}
 }

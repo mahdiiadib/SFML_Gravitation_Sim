@@ -154,6 +154,9 @@
     <Font Include="fonts\AGENCYB.TTF" />
     <Font Include="fonts\AGENCYR.TTF" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="gravita_cpp.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
