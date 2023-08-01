@@ -27,6 +27,7 @@
     <Font Include="fonts\AGENCYR.TTF" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="gravita_cpp.txt" />
+    <Text Include="gravita.txt" />
+    <Text Include="perlin.txt" />
   </ItemGroup>
 </Project>
